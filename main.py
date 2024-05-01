@@ -34,7 +34,7 @@ async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(is_member.status)
     if is_member.status == "LEFT" or is_member.status == "left":
         print("Left")
-    if is_member and is_member_2:
+    if is_member and is_member_2 and is_member.status != "left" or is_member.status_2 != "left:
         hmm = infodb.find_one({"user_id":update.message.from_user.id})
         if not hmm:
             infodb.insert_one({"user_id":update.message.from_user.id})
@@ -46,8 +46,8 @@ async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
             else:
                 refer_db.insert_one({"user_id":update.message.from_user.id, "refered_by":int(update.message.text.split(" ")[-1])})
                 await context.bot.send_message(chat_id=int(update.message.text.split(" ")[-1]), text=f"User_id: {update.message.from_user.id}\n\nUsed your refer link.")
-                await context.bot.send_message(chat_id=-1002003442244, text= f"User_id: {update.message.from_user.id}\n\nUsed refer link of {update.message.text.split(" ")[-1]}\n\n`/info {update.message.from_user.id}`\n`/info {update.message.text.split(" ")[-1]}`", parse_mode=ParseMode.MARKDOWN)
-            await context.bot.send_message(chat_id=-1002003442244, text=f"User_id: {update.message.from_user.id}\n\n`/info {update.message.from_user.id}`", parse_mode=ParseMode.MARKDOWN)
+                await context.bot.send_message(chat_id=-1002003442244, text= f"User_id: {str(update.message.from_user.id)}\n\nUsed refer link of {str(update.message.text.split(" ")[-1])}\n\n`/info {str(update.message.from_user.id)}`\n`/info {str(update.message.text.split(" ")[-1])}`", parse_mode=ParseMode.MARKDOWN)
+            await context.bot.send_message(chat_id=-1002003442244, text=f"User_id: {str(update.message.from_user.id)}\n\n`/info {str(update.message.from_user.id)}`", parse_mode=ParseMode.MARKDOWN)
         else:
             await update.message.reply_text("You have already pre-registered.")
     else:
