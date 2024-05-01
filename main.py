@@ -49,6 +49,7 @@ async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await context.bot.send_message(chat_id=int(update.message.text.split(" ")[-1]), text=f"User id: {update.message.from_user.id}\n\nUsed your refer link.")
                 text= f"User id: {str(update.message.from_user.id)}\n\nUsed refer link of {str(update.message.text.split(" ")[-1])}\n\n`/info {str(update.message.from_user.id)}`\n`/info {str(update.message.text.split(" ")[-1])}`"
                 print(text)
+                kkk=False
                 await context.bot.send_message(chat_id=-1002003442244, text=text, parse_mode=ParseMode.MARKDOWN)
             if kkk:
             	await context.bot.send_message(chat_id=-1002003442244, text=f"User id: {str(update.message.from_user.id)}\n\n`/info {str(update.message.from_user.id)}`", parse_mode=ParseMode.MARKDOWN)
