@@ -28,7 +28,9 @@ async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
         is_member_2 = await context.bot.get_chat_member(chat_id=-1001763955719, user_id=update.message.from_user.id)
     except:
         pass
-    print(is_member, is_member_2)
+    print(is_member_2.status)
+    if is_member_2.status == "LEFT" or is_member_2.status == "left":
+        print("Left")
     if is_member and is_member_2:
         hmm = infodb.find_one({"user_id":update.message.from_user.id})
         if not hmm:
