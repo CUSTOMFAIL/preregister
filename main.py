@@ -31,6 +31,9 @@ async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print(is_member_2.status)
     if is_member_2.status == "LEFT" or is_member_2.status == "left":
         print("Left")
+    print(is_member.status)
+    if is_member.status == "LEFT" or is_member.status == "left":
+        print("Left")
     if is_member and is_member_2:
         hmm = infodb.find_one({"user_id":update.message.from_user.id})
         if not hmm:
