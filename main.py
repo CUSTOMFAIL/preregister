@@ -72,7 +72,7 @@ def main() -> None:
         256).rate_limiter(AIORateLimiter(max_retries=30)).build()
     application.add_handler(CommandHandler("start", start_func))
     application.add_handler(CommandHandler("precount", preregcount))
-    application.add_handler(CommandHandler("send", send))
+    # application.add_handler(CommandHandler("send", send))
     application.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
 
