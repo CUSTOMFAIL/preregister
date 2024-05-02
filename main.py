@@ -65,7 +65,7 @@ Player will initially start as Knights.
 Per 10 knights there would be a captain 
 Per 3 captain it would be a Battalion Head
 Player will initially start as knight.```"""
-    await update.message.reply_text(text)
+    await update.message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
 
 def main() -> None:
     application = Application.builder().token("7027271738:AAHwridfxHokuSJ53B-j8S0u5bstI5gtq4Y").concurrent_updates(
