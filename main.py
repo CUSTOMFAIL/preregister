@@ -57,11 +57,22 @@ async def preregcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
     count = len(list(x))
     await update.message.reply_text(f"Total no. of user who pre-registered: {count}")
 
+async def send(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = """
+```𝙳𝚎𝚝𝚊𝚒𝚕𝚜:
+Each Kingdom will have thier own God. 
+Player will initially start as Knights.
+Per 10 knights there would be a captain 
+Per 3 captain it would be a Battalion Head
+Player will initially start as knight.```"""
+    await update.message.reply_text(text)
+
 def main() -> None:
     application = Application.builder().token("7027271738:AAHwridfxHokuSJ53B-j8S0u5bstI5gtq4Y").concurrent_updates(
         256).rate_limiter(AIORateLimiter(max_retries=30)).build()
     application.add_handler(CommandHandler("start", start_func))
     application.add_handler(CommandHandler("precount", preregcount))
+    application.add_handler(CommandHandler("send", send))
     application.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
 
