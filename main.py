@@ -17,7 +17,6 @@ infodb = db["pre_reg"]
 refer_db = db['refer']
 
 async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    print(True)
     is_member = False
     is_member_2 = False
     try:
@@ -28,12 +27,6 @@ async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
         is_member_2 = await context.bot.get_chat_member(chat_id=-1001763955719, user_id=update.message.from_user.id)
     except:
         pass
-    print(is_member_2.status)
-    if is_member_2.status == "LEFT" or is_member_2.status == "left":
-        print("Left")
-    print(is_member.status)
-    if is_member.status == "LEFT" or is_member.status == "left":
-        print("Left")
     if is_member and is_member_2 and is_member.status != "left" and is_member_2.status != "left" and is_member.status != "Left" and is_member_2.status != "Left":
         hmm = infodb.find_one({"user_id":update.message.from_user.id})
         if not hmm:
@@ -59,10 +52,16 @@ async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
         keyboard = [[InlineKeyboardButton("Channel", url="https://t.me/Yurasania"), InlineKeyboardButton("Group", url="https://t.me/YurasaniaChat")]]
         await update.message.reply_text("Please join the following channel and use the command again to start.", reply_markup=InlineKeyboardMarkup(keyboard))
 
+async def preregcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    x = infodb.find({})
+    count = len(list(x))
+    await update.message.reply_text(f"Total no. of user who pre-registered: {count}")
+
 def main() -> None:
     application = Application.builder().token("7027271738:AAHwridfxHokuSJ53B-j8S0u5bstI5gtq4Y").concurrent_updates(
         256).rate_limiter(AIORateLimiter(max_retries=30)).build()
     application.add_handler(CommandHandler("start", start_func))
+    application.add_handler(CommandHandler("precount", preregcount))
     application.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
 
