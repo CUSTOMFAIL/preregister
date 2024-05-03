@@ -71,13 +71,13 @@ async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_id = splitd[0]
         uname = splitd[1]
         king = splitd[2]
-        if king.lower() in ["darkness", "thunder", "light", "water", "wind", "nature", "ice", "fire"]
+        if king.lower() in ["darkness", "thunder", "light", "water", "wind", "nature", "ice", "fire"]:
             text = "*King of {}*\nUser id: `{}`\nUsername: {}".format(king.title(), user_id, uname)
             keyboard = [[InlineKeyboardButton("Channel", callback_data=f"vote|{user_id}|{king}")]]
             await update.message.reply_text(text=text, reply_markup=InlineKeyboardMarkup(keyboard)) # chat_id=-1002102617074, 
             await update.message.reply_text(f"Test phase Success")
         else:
-            await update.message.reply_text("tell correct element")        
+            await update.message.reply_text("tell correct element")     
 
 def main() -> None:
     application = Application.builder().token("7027271738:AAHwridfxHokuSJ53B-j8S0u5bstI5gtq4Y").concurrent_updates(
