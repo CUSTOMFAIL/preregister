@@ -68,13 +68,13 @@ async def preregcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.from_user.id == 1037179104:
         splitd = update.message.text.split(" ")
-        user_id = splitd[0]
-        uname = splitd[1]
-        king = splitd[2]
+        user_id = splitd[1]
+        uname = splitd[2]
+        king = splitd[3]
         if king.lower() in ["darkness", "thunder", "light", "water", "wind", "nature", "ice", "fire"]:
             text = "*King of {}*\nUser id: `{}`\nUsername: {}".format(king.title(), user_id, uname)
             keyboard = [[InlineKeyboardButton("Vote - 0", callback_data=f"vote|{user_id}|{king}|0")]]
-            await update.message.reply_text(text=text, reply_markup=InlineKeyboardMarkup(keyboard)) # chat_id=-1002102617074, 
+            await update.message.reply_text(text=text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN) # chat_id=-1002102617074, 
             await update.message.reply_text(f"Test phase Success")
         else:
             await update.message.reply_text("tell correct element")     
