@@ -80,7 +80,7 @@ async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("tell correct element")     
 
 async def button_cbs(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    pass
+    print(update)
 
 def main() -> None:
     application = Application.builder().token("7027271738:AAHwridfxHokuSJ53B-j8S0u5bstI5gtq4Y").concurrent_updates(
