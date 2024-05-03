@@ -15,6 +15,14 @@ cluster = MongoClient(basic_info_db_url)
 db = cluster["gamebot"]
 infodb = db["pre_reg"]
 refer_db = db['refer']
+fire_db = db['fire']
+thunder_db = db['thunder']
+ice_db = db['ice']
+darkness_db = db['darkness']
+light_db = db['light']
+wind_db = db['wind']
+nature_db = db['nature']
+water_db = db['water']
 
 async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
     is_member = False
@@ -57,22 +65,26 @@ async def preregcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
     count = len(list(x))
     await update.message.reply_text(f"Total no. of user who pre-registered: {count}")
 
-async def send(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = """
-```𝙳𝚎𝚝𝚊𝚒𝚕𝚜:
-Each Kingdom will have thier own God. 
-Player will initially start as Knights.
-Per 10 knights there would be a captain 
-Per 3 captain it would be a Battalion Head
-Player will initially start as knight.```"""
-    await update.message.reply_text(text, parse_mode=ParseMode.MARKDOWN)
+async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.from_user.id == 1037179104:
+        splitd = update.message.split(" ")
+        user_id = splitd[0]
+        uname = splitd[1]
+        king = splitd[2]
+        if king.lower() in ["darkness", "thunder", "light", "water", "wind", "nature", "ice", "fire"]
+            text = "*King of {}*\nUser id: `{}`\nUsername: {}".format(king.title(), user_id, uname)
+            keyboard = [[InlineKeyboardButton("Channel", callback_data=f"vote|{user_id}|{king}"]]
+            await update.message.reply_text(chat_id=-1002102617074, text=text, reply_markup=InlineKeyboardMarkup(keyboard))
+            await update.message.reply_text(f"Test phase Success")
+        else:
+            await update.message.reply_text("tell correct element")        
 
 def main() -> None:
     application = Application.builder().token("7027271738:AAHwridfxHokuSJ53B-j8S0u5bstI5gtq4Y").concurrent_updates(
         256).rate_limiter(AIORateLimiter(max_retries=30)).build()
     application.add_handler(CommandHandler("start", start_func))
     application.add_handler(CommandHandler("precount", preregcount))
-    # application.add_handler(CommandHandler("send", send))
+    application.add_handler(CommandHandler("new", send))
     application.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
 
