@@ -74,7 +74,7 @@ async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if king.lower() in ["darkness", "thunder", "light", "water", "wind", "nature", "ice", "fire"]
             text = "*King of {}*\nUser id: `{}`\nUsername: {}".format(king.title(), user_id, uname)
             keyboard = [[InlineKeyboardButton("Channel", callback_data=f"vote|{user_id}|{king}"]]
-            await update.message.reply_text(chat_id=-1002102617074, text=text, reply_markup=InlineKeyboardMarkup(keyboard))
+            await update.message.reply_text(text=text, reply_markup=InlineKeyboardMarkup(keyboard)) # chat_id=-1002102617074, 
             await update.message.reply_text(f"Test phase Success")
         else:
             await update.message.reply_text("tell correct element")        
