@@ -73,18 +73,22 @@ async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
         king = splitd[2]
         if king.lower() in ["darkness", "thunder", "light", "water", "wind", "nature", "ice", "fire"]:
             text = "*King of {}*\nUser id: `{}`\nUsername: {}".format(king.title(), user_id, uname)
-            keyboard = [[InlineKeyboardButton("Channel", callback_data=f"vote|{user_id}|{king}")]]
+            keyboard = [[InlineKeyboardButton("Vote - 0", callback_data=f"vote|{user_id}|{king}|0")]]
             await update.message.reply_text(text=text, reply_markup=InlineKeyboardMarkup(keyboard)) # chat_id=-1002102617074, 
             await update.message.reply_text(f"Test phase Success")
         else:
             await update.message.reply_text("tell correct element")     
+
+async def button_cbs(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    pass
 
 def main() -> None:
     application = Application.builder().token("7027271738:AAHwridfxHokuSJ53B-j8S0u5bstI5gtq4Y").concurrent_updates(
         256).rate_limiter(AIORateLimiter(max_retries=30)).build()
     application.add_handler(CommandHandler("start", start_func))
     application.add_handler(CommandHandler("precount", preregcount))
-    application.add_handler(CommandHandler("new", send))
+    application.add_handler(CommandHandler("new", newpoll))
+    application.add_handler(CallbackQueryHandler(button_cbs))
     application.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
 
