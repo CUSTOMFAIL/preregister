@@ -67,7 +67,7 @@ async def preregcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.from_user.id == 1037179104:
-        splitd = update.message.split(" ")
+        splitd = update.message.text.split(" ")
         user_id = splitd[0]
         uname = splitd[1]
         king = splitd[2]
