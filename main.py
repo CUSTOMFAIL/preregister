@@ -74,7 +74,7 @@ async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if king.lower() in ["darkness", "thunder", "light", "water", "wind", "nature", "ice", "fire"]:
             text = "*King of {}*\nUser id: `{}`\nUsername: {}".format(king.title(), user_id, uname)
             keyboard = [[InlineKeyboardButton("Vote - 0", callback_data=f"vote|{user_id}|{king}|0")]]
-            await context.bot.send_message(chat_id=-1002102617074, text=text, reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN) # chat_id=-1002102617074, 
+            await context.bot.send_message(chat_id=-1002102617074, text=text.replace("_", "\_"), reply_markup=InlineKeyboardMarkup(keyboard), parse_mode=ParseMode.MARKDOWN) # chat_id=-1002102617074, 
             await update.message.reply_text(f"Done")
         else:
             await update.message.reply_text("tell correct element")     
