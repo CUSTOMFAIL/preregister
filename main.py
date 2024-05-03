@@ -80,7 +80,40 @@ async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("tell correct element")     
 
 async def button_cbs(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    print(update)
+    is_member = False
+    is_member_2 = False
+    try:
+        is_member = await context.bot.get_chat_member(chat_id=-1002102617074, user_id=update.callback_query.from_user.id)
+    except:
+        pass
+    try:
+        is_member_2 = await context.bot.get_chat_member(chat_id=-1001763955719, user_id=update.callback_query.from_user.id)
+    except:
+        pass
+    if is_member and is_member_2 and is_member.status != "left" and is_member_2.status != "left" and is_member.status != "Left" and is_member_2.status != "Left":
+        hmm = infodb.find_one({"user_id":update.callback_query.from_user.id})
+        if hmm:
+            splitd = update.callback_query.data.split("|")
+            element = splitd[2]
+            has_voted = db[element.lower()].find_one({"user_id":update.callback_query.from_user.id})
+            voting_whom = splitd[1]
+            total_votes = int(splitd[3])
+            if has_voted:
+                if int(voting_whom) == int(has_voted['whom']):
+                    await update.callback_query.answer("You have already vote this person")
+                    return None
+                await update.callback_query.answer("You have already voted. You cant change your vote")
+            else:   
+                db[element.lower()].inster_one({"user_id":update.callback_query.from_user.id, "whom":int(voting_whom)})
+                keyboard = [[InlineKeyboardButton(f"Vote - {total_votes+1}", callback_data=f"vote|{voting_whom}|{element}|{total_votes+1}")]]
+                await update.callback_query.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(keyboard))
+                await update.callback_query.answer("You have successfully voted.")
+        else:
+            await update.callback_query.answer("Pre register in bot before voting") 
+    else:
+        await update.callback_query.answer("Join channel and discussion to give vote")
+
+    
 
 def main() -> None:
     application = Application.builder().token("7027271738:AAHwridfxHokuSJ53B-j8S0u5bstI5gtq4Y").concurrent_updates(
