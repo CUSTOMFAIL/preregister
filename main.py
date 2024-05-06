@@ -67,12 +67,17 @@ async def preregcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.from_user.id == 1037179104:
-        splitd = update.message.text.split(" ", 1)[1]
-        hmm = list(infodb.find())
-        sublists = [hmm[i:i+5] for i in range(0, len(hmm), 5)]
-        for i in sublists:
-            print(i)
-        
+        if update.message.reply_to_message:
+            hmm = list(infodb.find())
+            biglst = [hmm[i:i+5] for i in range(0, len(hmm), 5)]
+            dd = 0
+            for sublst in biglst:
+                for itm in sublst:
+                    try:
+                        await context.bot.forward_message(chat_id=int(itm['user_id']), from_chat_id=update.message.chat.id, message_id=update.message.reply_to_message.message_id)
+                        dd+=1
+                    except Exception as e:
+                        print(e)
 
 
 async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
