@@ -57,13 +57,22 @@ async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
         else:
             await update.message.reply_text("You have already pre-registered.")
     else:
-        keyboard = [[InlineKeyboardButton("Channel", url="https://t.me/Yurasania"), InlineKeyboardButton("Group", url="https://t.me/YurasaniaChat")]]
+        keyboard = [[InlineKeyboardButton("Channel", url="https://t.me/Yurasania"), InlineKeyboardButton("Group", url="https://t.me/+FEQsQlSYNXNkNTc1")]]
         await update.message.reply_text("Please join the following channel and use the command again to start.", reply_markup=InlineKeyboardMarkup(keyboard))
 
 async def preregcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
     x = infodb.find({})
     count = len(list(x))
     await update.message.reply_text(f"Total no. of user who pre-registered: {count}")
+
+async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message.from_user.id == 1037179104:
+        splitd = update.message.text.split(" ", 1)[1]
+        hmm = infodb.find()
+        for i in hmm:
+            print(i)
+        
+
 
 async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.from_user.id == 1037179104:
@@ -121,6 +130,7 @@ def main() -> None:
     application.add_handler(CommandHandler("start", start_func))
     application.add_handler(CommandHandler("precount", preregcount))
     application.add_handler(CommandHandler("new", newpoll))
+    application.add_handler(CommandHandler("broadcast", broadcast))
     application.add_handler(CallbackQueryHandler(button_cbs))
     application.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
