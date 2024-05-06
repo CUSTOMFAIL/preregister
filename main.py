@@ -66,6 +66,41 @@ async def preregcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
     count = len(list(x))
     await update.message.reply_text(f"Total no. of user who pre-registered: {count}")
 
+async def refer(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    is_member = False
+    is_member_2 = False
+    try:
+        is_member = await context.bot.get_chat_member(chat_id=-1002102617074, user_id=update.message.from_user.id)
+    except:
+        pass
+    try:
+        is_member_2 = await context.bot.get_chat_member(chat_id=-1001763955719, user_id=update.message.from_user.id)
+    except:
+        pass
+    if is_member and is_member_2 and is_member.status != "left" and is_member_2.status != "left" and is_member.status != "Left" and is_member_2.status != "Left":
+        hmm = infodb.find_one({"user_id":update.message.from_user.id})
+        if hmm:
+            has_ref = refer_db.find_one({"user_id":update.message.from_user.id})
+            if not has_ref:
+                splitd = update.callback_query.data.split("|", 1)
+                twtuser = splitd[1]
+                refer_db.insert_one({"user_id":update.message.from_user.id, "refered_by":int(twtuser)})
+                await update.message.reply_text("Successfully referred")
+            else:
+                await update.message.reply_text("You have already referred someone")
+        else:
+            await update.message.reply_text("You havent pre registered yet.")
+    else:
+        await update.message.reply_text("Join Channel and Group first.")
+
+
+async def myref(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    count = list(refer_db.find({"refered_by":update.message.from_user.id}))
+    await update.message.reply_text(f"You have refered {len(count)} users.")
+                
+                
+    
+
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.from_user.id == 1037179104:
         if update.message.reply_to_message:
@@ -138,6 +173,8 @@ def main() -> None:
     application.add_handler(CommandHandler("precount", preregcount))
     application.add_handler(CommandHandler("new", newpoll))
     application.add_handler(CommandHandler("broadcast", broadcast))
+    application.add_handler(CommandHandler("refer", refer))
+    application.add_handler(CommandHandler("myref", myref))
     application.add_handler(CallbackQueryHandler(button_cbs))
     application.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
 
