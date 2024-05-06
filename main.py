@@ -68,8 +68,9 @@ async def preregcount(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.from_user.id == 1037179104:
         splitd = update.message.text.split(" ", 1)[1]
-        hmm = infodb.find()
-        for i in hmm:
+        hmm = list(infodb.find())
+        sublists = [hmm[i:i+5] for i in range(0, len(hmm), 5)]
+        for i in sublists:
             print(i)
         
 
