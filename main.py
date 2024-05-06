@@ -5,6 +5,7 @@ from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandl
 from telegram.constants import ParseMode
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from pymongo import MongoClient
+import asyncio
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
 logging.getLogger("httpx").setLevel(logging.WARNING)
 logging.getLogger('apscheduler').setLevel(logging.WARNING)
@@ -78,7 +79,7 @@ async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
                         dd+=1
                     except Exception as e:
                         print(e)
-
+                    await asyncio.sleep(1)
 
 async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.from_user.id == 1037179104:
