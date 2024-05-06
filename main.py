@@ -82,7 +82,7 @@ async def refer(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if hmm:
             has_ref = refer_db.find_one({"user_id":update.message.from_user.id})
             if not has_ref:
-                splitd = update.message.text.split("|", 1)
+                splitd = update.message.text.split(" ", 1)
                 twtuser = splitd[1]
                 refer_db.insert_one({"user_id":update.message.from_user.id, "refered_by":int(twtuser)})
                 await update.message.reply_text("Successfully referred")
