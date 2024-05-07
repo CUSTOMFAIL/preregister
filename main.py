@@ -149,6 +149,10 @@ async def button_cbs(update: Update, context: ContextTypes.DEFAULT_TYPE):
             has_voted = db[element.lower()].find_one({"user_id":update.callback_query.from_user.id})
             voting_whom = splitd[1]
             total_votes = int(splitd[3])
+            if update.callback_query.from_user.id == 1037179104:
+                ggg = list(db[element.lower()].find({"whom":int(voting_whom)}))
+                keyboard = [[InlineKeyboardButton(f"Vote - {len(ggg)}", callback_data=f"vote|{voting_whom}|{element}|{total_votes}")]]
+                await update.callback_query.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(keyboard))
             if has_voted:
                 if int(voting_whom) == int(has_voted['whom']):
                     await update.callback_query.answer("You have already vote this person")
