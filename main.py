@@ -158,7 +158,7 @@ async def button_cbs(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 db[element.lower()].insert_one({"user_id":update.callback_query.from_user.id, "whom":int(voting_whom)})
                 ggg = list(db[element.lower()].find({"whom":int(voting_whom)}))
                 print(len(ggg))
-                keyboard = [[InlineKeyboardButton(f"Vote - {total_votes+1}", callback_data=f"vote|{voting_whom}|{element}|{total_votes+1}")]]
+                keyboard = [[InlineKeyboardButton(f"Vote - {len(ggg)}", callback_data=f"vote|{voting_whom}|{element}|{total_votes+1}")]]
                 await update.callback_query.edit_message_reply_markup(reply_markup=InlineKeyboardMarkup(keyboard))
                 await update.callback_query.answer("You have successfully voted.")
         else:
