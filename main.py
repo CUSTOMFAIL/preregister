@@ -59,7 +59,7 @@ async def start_func(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("You have already pre-registered.")
     else:
         link= await context.bot.create_chat_invite_link(chat_id=-1001763955719, member_limit=1,
-                                                      name=update.update.from_user.id)
+                                                      name=update.message.from_user.id)
         keyboard = [[InlineKeyboardButton("Channel", url="https://t.me/Yurasania"), InlineKeyboardButton("Group", url=link.invite_link)]]
         await update.message.reply_text("Please join the following channel and use the command again to start.", reply_markup=InlineKeyboardMarkup(keyboard))
 
