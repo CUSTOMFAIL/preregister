@@ -119,7 +119,7 @@ async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     await asyncio.sleep(1)
 
 async def newpoll(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.message.from_user.id == 1037179104:
+    if update.message.from_user.id == 7007586820:
         splitd = update.message.text.split(" ")
         user_id = splitd[1]
         uname = splitd[2]
